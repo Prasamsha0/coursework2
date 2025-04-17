@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+/* For the whole page */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style for the image container */
+.picture {
+  width: 50%;
+  height: 100vh; /* full screen height */
+  background: url("../images/Vector.png") no-repeat center center;
+  background-size: fill;
+  margin:0;
+  padding:0;
+}
+
+/* Style for the main container */
+.main {
+    height: 100vh;
+    width: 100vw;
+    background-color: red;
+    padding: 0px;
+}
+.loginform{
+	  width: 49%;
+	  height: 100vh; /* full screen height */
+   	  background-color: #FFFFFF;
+	  background-size: fill;
+	  margin:0;
+	  padding:0;
+}
+.row{
+	margin-top:50px;
+	height: 10px; 
+	width: 100px
+}
+.col{
+	border: 2px solid black;
+	border-radius: 5px;
+	height: 10px;
+	width:100px;
+}

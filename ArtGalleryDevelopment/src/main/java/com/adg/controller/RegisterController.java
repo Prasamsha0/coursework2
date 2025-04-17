@@ -1,4 +1,4 @@
-package com.agd.controller;
+package com.adg.controller;
 import com.adg.model.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-
+import com.adg.service.*;
 /**
  * Servlet implementation class RegisterController
  */
@@ -36,20 +36,22 @@ public class RegisterController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		UserModel user = new UserModel(
-	            0,
-	            request.getParameter("userID"),
-	            request.getParameter("userName"),
-	            request.getParameter("contact"),
-	            request.getParameter("address"),
-	            Date.valueOf(request.getParameter("email")),
-	            request.getParameter("password"),
-	            request.getParameter("role"),
-	            request.getParameter("password"),
-	            request.getParameter("gender")
-	        );
+		 UserModel user = new UserModel(
+			        0,
+			        request.getParameter("userName"),
+			        request.getParameter("contact"),
+			        request.getParameter("address"),
+			        request.getParameter("email"),
+			        request.getParameter("password"),
+			        Integer.parseInt(request.getParameter("age")),
+			        request.getParameter("gender"),
+			        request.getParameter("role"),
+			        Date.valueOf(request.getParameter("dob"))
+			    );
+		 	System.out.println("Dob value: " + request.getParameter("Dob"));
 
-	        login dao = new login();
+
+	        RegisterService dao = new RegisterService();
 	        boolean inserted=true;
 			try {
 				inserted = dao.insert(user);
@@ -59,15 +61,10 @@ public class RegisterController extends HttpServlet {
 				e.printStackTrace();
 			}
 
-	        if (inserted) {
-	            response.sendRedirect("success.jsp");
-	        } else {
-	            response.sendRedirect("error.jsp" );
-	        }
+	        
 	    
-	}
 	}
 		
 	}
 
-}
+

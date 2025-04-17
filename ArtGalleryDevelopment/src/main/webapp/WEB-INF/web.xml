@@ -12,6 +12,12 @@
     <welcome-file>register.jsp</welcome-file>
   </welcome-file-list>
     <!-- You can remove this if you don't need the CSS mapping -->
+      <servlet>
+    <servlet-name>RegisterController</servlet-name>
+    <servlet-class>com.adg.controller.RegisterController</servlet-class>
+</servlet>
+
+
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>/css/*</url-pattern>
@@ -20,6 +26,6 @@
     <servlet-name>default</servlet-name>
     <url-pattern>/images/*</url-pattern>
 </servlet-mapping>
-  
+
  
 </web-app>

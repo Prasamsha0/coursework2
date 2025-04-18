@@ -4,7 +4,7 @@ body {
 	font-family: sans-serif;
 	margin: 0;
 	padding: 20px;
-	background-image: linear-gradient(to right, pink, purple);
+	background-image: linear-gradient(to right, blue, green);
 	background-size: cover;
 	background-repeat: no-repeat;
 	height: 100vh;

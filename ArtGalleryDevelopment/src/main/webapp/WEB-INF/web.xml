@@ -10,13 +10,18 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>login.jsp</welcome-file>
     <welcome-file>register.jsp</welcome-file>
+    <welcome-file>success.jsp</welcome-file>
+    
   </welcome-file-list>
     <!-- You can remove this if you don't need the CSS mapping -->
       <servlet>
     <servlet-name>RegisterController</servlet-name>
     <servlet-class>com.adg.controller.RegisterController</servlet-class>
 </servlet>
-
+      <servlet>
+    <servlet-name>LoginController</servlet-name>
+    <servlet-class>com.adg.controller.LoginController</servlet-class>
+</servlet>
 
   <servlet-mapping>
     <servlet-name>default</servlet-name>

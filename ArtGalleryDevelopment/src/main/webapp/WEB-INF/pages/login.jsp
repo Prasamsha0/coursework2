@@ -6,15 +6,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page!</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css?v=1.0"/>
 </head>
 <body>
 	<div class="main">
 		<div class="picture">
 		</div>
 		<div class="loginform">
-			<div class="row">
-				  <form action="login" method="post">
+			<div class="loginform">
+			  <form action="login" method="post">
+			    <div class="row">
 			      <h1>Login</h1>
 			
 			      <label for="username">Username</label>
@@ -23,9 +24,10 @@
 			      <label for="password">Password</label>
 			      <input type="password" id="password" name="password" required>
 			
-			      <button type="submit">Login</button>
-		    	<a href="${pageContext.request.contextPath}/register">Register Your New Account</a>
-			      
+			      <button type="submit">Logiin</button>
+			      <a href="${pageContext.request.contextPath}/register">Register Your New Account</a>
+			    </div>
+			  </form>
 			</div>
 		</div>
 	</div>

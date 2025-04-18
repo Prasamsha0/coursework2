@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Registration Form</h1>
+    <h1>Registration sForm</h1>
 
     <c:if test="${not empty error}">
       <p class="error-message">${error}</p>

@@ -9,23 +9,26 @@
 
 /* Style for the image container */
 .picture {
-  width: 50%;
+  width: 60vw;
   height: 100vh; /* full screen height */
   background: url("../images/Vector.png") no-repeat center center;
-  background-size: fill;
+  background-size: cover;
   margin:0;
   padding:0;
 }
 
 /* Style for the main container */
 .main {
+    display: flex;
     height: 100vh;
     width: 100vw;
-    background-color: red;
-    padding: 0px;
+    background-color: #FFFFFF;
+    padding: 0;
+    margin: 0;
 }
+
 .loginform{
-	  width: 49%;
+	  width: 40vw;
 	  height: 100vh; /* full screen height */
    	  background-color: #FFFFFF;
 	  background-size: fill;
@@ -43,3 +46,8 @@
 	height: 10px;
 	width:100px;
 }
+
+
+
+
+

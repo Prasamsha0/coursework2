@@ -60,6 +60,7 @@ public class RegisterController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			request.getRequestDispatcher("WEB-INF/pages/success.jsp").forward(request, response);
 
 	        
 	    

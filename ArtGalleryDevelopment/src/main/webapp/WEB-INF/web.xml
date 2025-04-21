@@ -11,6 +11,8 @@
     <welcome-file>login.jsp</welcome-file>
     <welcome-file>register.jsp</welcome-file>
     <welcome-file>success.jsp</welcome-file>
+	<welcome-file>home.jsp</welcome-file>
+    
     
   </welcome-file-list>
     <!-- You can remove this if you don't need the CSS mapping -->

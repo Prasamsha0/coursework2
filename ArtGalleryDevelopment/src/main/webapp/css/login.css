@@ -1,53 +1,84 @@
 @charset "UTF-8";
 
-/* For the whole page */
-
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-/* Style for the image container */
-.picture {
-  width: 60vw;
-  height: 100vh; /* full screen height */
-  background: url("../images/Vector.png") no-repeat center center;
-  background-size: cover;
-  margin:0;
-  padding:0;
+body, html {
+  height: 100%;
+  width: 100%;
 }
 
-/* Style for the main container */
 .main {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    background-color: #FFFFFF;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
 }
 
-.loginform{
-	  width: 40vw;
-	  height: 100vh; /* full screen height */
-   	  background-color: #FFFFFF;
-	  background-size: fill;
-	  margin:0;
-	  padding:0;
-}
-.row{
-	margin-top:50px;
-	height: 10px; 
-	width: 100px
-}
-.col{
-	border: 2px solid black;
-	border-radius: 5px;
-	height: 10px;
-	width:100px;
+/* Left colorful art side */
+.picture {
+  width: 52%;
+  height: 100vh;
+  background: url('../images/Vector.png') no-repeat center center;
+  background-size: cover;
 }
 
+/* Right login form side */
+.loginform {
+  width: 48%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+form {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+h1 {
+  margin-bottom: 20px;
+}
 
+label {
+  align-self: flex-start;
+  margin: 5px 0 3px;
+  font-size: 14px;
+}
 
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+a {
+  margin-top: 15px;
+  font-size: 12px;
+  text-decoration: none;
+  color: #6c4db2;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -10,25 +10,20 @@
 </head>
 <body>
 	<div class="main">
-		<div class="picture">
-		</div>
+		<div class="picture"></div>
 		<div class="loginform">
-			<div class="loginform">
-			  <form action="login" method="post">
-			    <div class="row">
-			      <h1>Login</h1>
-			
-			      <label for="username">Username</label>
-			      <input type="text" id="username" name="username" required>
-			
-			      <label for="password">Password</label>
-			      <input type="password" id="password" name="password" required>
-			
-			      <button type="submit">Logiin</button>
-			      <a href="${pageContext.request.contextPath}/register">Register Your New Account</a>
-			    </div>
-			  </form>
-			</div>
+			<form action="login" method="post">
+				<h1>Login</h1>
+
+				<label for="username">Username</label>
+				<input type="text" id="username" name="username" required>
+
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password" required>
+
+				<button type="submit">Login</button>
+				<a href="${pageContext.request.contextPath}/register">Register Your New Account</a>
+			</form>
 		</div>
 	</div>
 </body>

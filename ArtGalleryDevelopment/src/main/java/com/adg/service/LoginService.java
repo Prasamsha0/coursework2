@@ -2,34 +2,78 @@ package com.adg.service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.adg.config.DbConfig;
 import com.adg.model.UserModel;
-public class LoginService {
-	public boolean insert(UserModel user) throws Exception{
-		try {
-			System.out.println("Trying to connect...");
-			Connection con = DbConfig.getConnection();
-			System.out.println("Connected!");
+import com.adg.util.PasswordUtil;
 
-		
-		String query="insert into user(user_id, user_name,user_contact, user_address, user_email, user_password, user_age, user_gender, user_role, user_dob ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		PreparedStatement ps = con.prepareStatement(query);
-		ps.setInt(1, user.getUserId());
-        ps.setString(2, user.getUserName());
-        ps.setString(3, user.getContact());
-        ps.setString(4, user.getAddress());
-        ps.setString(5, user.getEmail());
-        ps.setString(7, user.getPassword());
-        ps.setLong(8, user.getAge());
-        ps.setString(9, user.getGender());
-        ps.setString(6, user.getRole());
-        ps.setDate(10, user.getDob());
-        int rows = ps.executeUpdate();
-        con.close();
-        return rows > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
-    }
-	}}
+/**
+ * Service class for handling login operations. Connects to the database,
+ * verifies user credentials, and returns login status.
+ */
+public class LoginService {
+
+	private Connection dbConn;
+	private boolean isConnectionError = false;
+
+	/**
+	 * Constructor initializes the database connection. Sets the connection error
+	 * flag if the connection fails.
+	 */
+	public LoginService() {
+		try {
+			dbConn = DbConfig.getConnection();
+		} catch (SQLException | ClassNotFoundException ex) {
+			ex.printStackTrace();
+			isConnectionError = true;
+		}
+	}
+
+	/**
+	 * Validates the user credentials against the database records.
+	 *
+	 * @param studentModel the StudentModel object containing user credentials
+	 * @return true if the user credentials are valid, false otherwise; null if a
+	 *         connection error occurs
+	 */
+	public Boolean loginUser(UserModel userModel) {
+		if (isConnectionError) {
+			System.out.println("Connection Error!");
+			return null;
+		}
+
+		String query = "SELECT user_username, user_password FROM user WHERE user_username = ?";
+		try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+			stmt.setString(1, userModel.getUserName());
+			ResultSet result = stmt.executeQuery();
+
+			if (result.next()) {
+				return validatePassword(result, userModel);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Validates the password retrieved from the database.
+	 *
+	 * @param result       the ResultSet containing the username and password from
+	 *                     the database
+	 * @param studentModel the StudentModel object containing user credentials
+	 * @return true if the passwords match, false otherwise
+	 * @throws SQLException if a database access error occurs
+	 */
+	private boolean validatePassword(ResultSet result, UserModel userModel) throws SQLException {
+		String dbUsername = result.getString("username");
+		String dbPassword = result.getString("password");
+
+		return dbUsername.equals(userModel.getUserName())
+				&& PasswordUtil.decrypt(dbPassword, dbUsername).equals(userModel.getPassword());
+	}
+}

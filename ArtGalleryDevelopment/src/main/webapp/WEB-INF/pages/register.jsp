@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="ISO-8859-1">
+  <meta charset="UTF-8">
   <title>Registration Form</title>
   <c:set var="contextPath" value="${pageContext.request.contextPath}" />
   <link rel="stylesheet" type="text/css" href="${contextPath}/css/register.css?v=1.0" />
@@ -27,7 +27,7 @@
 
     <form action="${contextPath}/register" method="post">
       <div class="row">
-        <input type="text" name="userName" placeholder="Full Name" value="${userName}" required />
+        <input type="text" name="userName" placeholder="Full Name" value="${username}" required />
       </div>
 
       <div class="row">
@@ -42,14 +42,20 @@
 
       <div class="row">
         <input type="number" name="age" placeholder="Age" value="${age}" required />
-        <input type="text" name="role" placeholder="Role" value="${role}" required />
+        <input type="text" name="repass" placeholder="Re-enter password" value="${repass}" required />
       </div>
 
       <div class="row">
         <input type="date" name="dob" placeholder="Date of Birth" value="${dob}" required />
         <div class="gender-group">
-          <label><input type="radio" name="gender" value="male" ${gender == 'male' ? 'checked' : ''} required> Male</label>
-          <label><input type="radio" name="gender" value="female" ${gender == 'female' ? 'checked' : ''} required> Female</label>
+          <label>
+            <input type="radio" name="gender" value="male"
+                   <c:if test="${gender == 'male'}">checked</c:if> required> Male
+          </label>
+          <label>
+            <input type="radio" name="gender" value="female"
+                   <c:if test="${gender == 'female'}">checked</c:if> required> Female
+          </label>
         </div>
       </div>
 
@@ -65,7 +71,6 @@
 
     <p class="login-link">Already have an account? <a href="${contextPath}/login">Login here</a></p>
   </div>
-
 </div>
 </body>
 </html>

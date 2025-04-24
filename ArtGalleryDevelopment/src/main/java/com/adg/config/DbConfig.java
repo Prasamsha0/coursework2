@@ -1,10 +1,14 @@
 package com.adg.config;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import jakarta.servlet.ServletException;
 
 public class DbConfig {
-	public static Connection getConnection() throws Exception {
+	public static Connection getConnection() throws SQLException, ClassNotFoundException  {
 	    try {
 	        String url = "jdbc:mysql://localhost:3306/artgallery";
 	        String username = "root";

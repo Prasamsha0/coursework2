@@ -15,12 +15,12 @@ public class UserModel {
     private String password;
     private int age;
     private String gender;
-    private String role;
+    private String repass;
     private Date dob;
 
     // Constructor
     public UserModel(int userId, String userName, String contact, String address, String email,
-                String password, int age, String gender, String role , Date dob) {
+                String password, int age, String gender, String repass , Date dob) {
         this.userId = userId;
         this.userName = userName;
         this.contact = contact;
@@ -29,9 +29,15 @@ public class UserModel {
         this.password = password;
         this.age= age;
         this.gender = gender;
-        this.role = role;
+        this.repass = repass;
         this.dob = dob;
     }
+    
+	public UserModel(String username, String pasword) {
+		this.userName = username;
+		this.password = pasword;
+	}
+
 
 	/**
 	 * @return the userId
@@ -146,17 +152,17 @@ public class UserModel {
 	}
 
 	/**
-	 * @return the role
+	 * @return the repass
 	 */
-	public String getRole() {
-		return role;
+	public String getrepass() {
+		return repass;
 	}
 
 	/**
-	 * @param role the role to set
+	 * @param repass the repass to set
 	 */
-	public void setRole(String role) {
-		this.role = role;
+	public void setrepass(String repass) {
+		this.repass = repass;
 	}
 
 	/**

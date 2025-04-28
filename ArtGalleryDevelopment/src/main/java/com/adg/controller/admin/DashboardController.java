@@ -32,7 +32,7 @@ public class DashboardController extends HttpServlet {
 	 * the request to the dashboard JSP page.
 	 * 
 	 * @param request  The HttpServletRequest object containing the request data.
-	 * @param response The HttpServletResponse object used to return the response.
+	 * @param response The  HttpServletResponse object used to return the response.
 	 * @throws ServletException If an error occurs during request processing.
 	 * @throws IOException      If an input or output error occurs.
 	 */

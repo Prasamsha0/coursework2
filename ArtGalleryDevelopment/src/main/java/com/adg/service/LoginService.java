@@ -69,11 +69,20 @@ public class LoginService {
 	 * @return true if the passwords match, false otherwise
 	 * @throws SQLException if a database access error occurs
 	 */
-	private boolean validatePassword(ResultSet result, UserModel userModel) throws SQLException {
-		String dbUsername = result.getString("username");
-		String dbPassword = result.getString("password");
 
-		return dbUsername.equals(userModel.getUserName())
-				&& PasswordUtil.decrypt(dbPassword, dbUsername).equals(userModel.getPassword());
+	private boolean validatePassword(ResultSet result, UserModel userModel) throws SQLException {
+	    String dbUsername = result.getString("user_username");
+	    String dbPassword = result.getString("user_password");
+	    String decrypted = PasswordUtil.decrypt(dbPassword, dbUsername);
+	    
+	    System.out.println("DB Username: " + dbUsername);
+	    System.out.println("Input Username: " + userModel.getUserName());
+	    System.out.println("Decrypted Password: " + decrypted);
+	    System.out.println("Input Password: " + userModel.getPassword());
+	    
+	    return dbUsername.equalsIgnoreCase(userModel.getUserName())
+	            && decrypted != null
+	            && decrypted.equals(userModel.getPassword());
 	}
+
 }

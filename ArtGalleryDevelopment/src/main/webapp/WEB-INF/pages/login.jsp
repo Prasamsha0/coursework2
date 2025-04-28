@@ -12,9 +12,17 @@
 	<div class="main">
 		<div class="picture"></div>
 		<div class="loginform">
-			<form action="login" method="post">
+			<form action="${pageContext.request.contextPath}/login" method="post">
 				<h1>Login</h1>
-
+				<!-- Display error message if available -->
+				<c:if test="${not empty error}">
+					<p class="error-message">${error}</p>
+				</c:if>
+			
+				<!-- Display success message if available -->
+				<c:if test="${not empty success}">
+					<p class="success-message">${success}</p>
+				</c:if>
 				<label for="username">Username</label>
 				<input type="text" id="username" name="username" required>
 
@@ -26,5 +34,7 @@
 			</form>
 		</div>
 	</div>
+	
+
 </body>
 </html>

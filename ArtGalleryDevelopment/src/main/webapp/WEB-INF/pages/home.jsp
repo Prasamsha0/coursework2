@@ -20,7 +20,9 @@
         <input type="text" placeholder="search">
         <button>X</button>
       </div>
-      <div class="logout">LOGOUT</div>
+      <div class="logout">
+      <a href="${pageContext.request.contextPath}/logout">LOGOUT</a>
+      </div>
     </nav>
   </header>
 

@@ -17,24 +17,21 @@ import com.adg.util.SessionUtil;
  */
 @WebServlet(asyncSupported = true, urlPatterns = {"/logout"})
 public class LogoutController extends HttpServlet {
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
-            throws ServletException, IOException {
-        // Clear all session attributes
-        HttpSession session = req.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        
-        // Remove all cookies
-        CookieUtil.deleteCookie(req, resp, "role");
-        CookieUtil.deleteCookie(req, resp, "JSESSIONID");
-        
-        // Add cache control headers
-        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        resp.setHeader("Pragma", "no-cache");
-        resp.setHeader("Expires", "0");
-        
-        resp.sendRedirect(req.getContextPath() + "/login");
+    private static final long serialVersionUID = 1L;
+
+    private void processLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        SessionUtil.invalidateSession(request); // clears session
+        CookieUtil.deleteCookie(request, response, "role"); // clears cookie
+        response.sendRedirect(request.getContextPath() + "/login"); // go to login page
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        processLogout(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        processLogout(request, response);
     }
 }
-

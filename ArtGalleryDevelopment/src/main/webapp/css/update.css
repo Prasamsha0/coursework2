@@ -119,7 +119,10 @@ footer {
     list-style: disc;
     margin-left: 1.2rem;
 }
-
+.terms, .login-link {
+  font-size: 12px;
+  margin-top: 15px;
+}
 .footer-bottom {
     display: flex;
     justify-content: space-between;

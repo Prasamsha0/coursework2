@@ -56,12 +56,13 @@ public class CookieUtil {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(name)) {
                     cookie.setValue("");
-                    cookie.setPath("/"); // important
+                    cookie.setPath("/"); // important!
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
                 }
             }
         }
     }
+
 
 }

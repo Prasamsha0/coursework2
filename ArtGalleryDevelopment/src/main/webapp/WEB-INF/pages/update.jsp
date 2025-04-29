@@ -73,6 +73,8 @@
             <p><strong>Age:</strong> ${user.age}</p>
             <p><strong>Address:</strong> ${user.address}</p>
         </div>
+        <p class="login-link">Already have an account? <a href="${contextPath}/home">back</a></p>
+        
     </div>
 </main>
 

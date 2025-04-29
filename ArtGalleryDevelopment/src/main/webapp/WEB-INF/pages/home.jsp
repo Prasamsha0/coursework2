@@ -1,3 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="jakarta.servlet.http.HttpSession"%>
+<%@ page import="jakarta.servlet.http.HttpServletRequest"%>
+
+<%
+// Initialize necessary objects and variables
+HttpSession userSession = request.getSession(false);
+String currentUser = (String) (userSession != null ? userSession.getAttribute("username") : null);
+// need to add data in attribute to select it in JSP code using JSTL core tag
+pageContext.setAttribute("currentUser", currentUser);
+%>
+<%@ page import="com.adg.util.CookieUtil" %>
+<%
+// Check both session and cookie
+HttpServletRequest req = (HttpServletRequest) pageContext.getRequest();
+Cookie roleCookie = CookieUtil.getCookie(req, "role");
+
+if (userSession == null || currentUser == null || roleCookie == null) {
+    ((HttpServletResponse) pageContext.getResponse()).sendRedirect(req.getContextPath() + "/login");
+    return;
+}
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +37,6 @@
       <ul class="nav-links">
 		<li><a href="${pageContext.request.contextPath}/home">Home</a></li>
         <li><a href="${pageContext.request.contextPath}/userUpdate">Manage Information</a></li>
-        <!-- Fix the double quotes issue -->
         <li><a href="#">About Us</a></li>
         <li><a href="#">Contact Us</a></li>
       </ul>

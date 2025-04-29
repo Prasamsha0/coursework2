@@ -32,7 +32,19 @@ public class UserModel {
         this.repass = repass;
         this.dob = dob;
     }
-    
+    public UserModel(int userId, String userName, String contact, String address, String email,
+            String password, int age, String gender,  Date dob) {
+    this.userId = userId;
+    this.userName = userName;
+    this.contact = contact;
+    this.address = address;
+    this.email = email;
+    this.password = password;
+    this.age= age;
+    this.gender = gender;
+    this.dob = dob;
+}
+
 	public UserModel(String username, String pasword) {
 		this.userName = username;
 		this.password = pasword;

@@ -13,6 +13,7 @@
     <welcome-file>success.jsp</welcome-file>
 	<welcome-file>home.jsp</welcome-file>
 	<welcome-file>dashboard.jsp</welcome-file>
+	<welcome-file>update.jsp</welcome-file>
     
     
   </welcome-file-list>
@@ -21,6 +22,11 @@
         <display-name>RegisterController</display-name>
     	<servlet-name>RegisterController</servlet-name>
     	<servlet-class>com.adg.controller.RegisterController</servlet-class>
+	</servlet>
+	<servlet>
+        <display-name>UpdateController</display-name>
+    	<servlet-name>UpdateController</servlet-name>
+    	<servlet-class>com.adg.controller.UpdateController</servlet-class>
 	</servlet>
     <servlet>
     	<display-name>LoginController</display-name>

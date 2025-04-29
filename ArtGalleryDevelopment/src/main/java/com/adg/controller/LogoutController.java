@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import com.adg.util.CookieUtil;
@@ -15,19 +17,24 @@ import com.adg.util.SessionUtil;
  */
 @WebServlet(asyncSupported = true, urlPatterns = {"/logout"})
 public class LogoutController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		SessionUtil.invalidateSession(request);  // Ensure session is fully invalidated
-		CookieUtil.deleteCookie(response, "role");  // Ensure role cookie is deleted
-		response.sendRedirect(request.getContextPath() + "/login");
-	}
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    CookieUtil.deleteCookie(response, "role");
-	    SessionUtil.invalidateSession(request);
-	    response.sendRedirect(request.getContextPath() + "/login");
-	}
-
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        // Clear all session attributes
+        HttpSession session = req.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        
+        // Remove all cookies
+        CookieUtil.deleteCookie(req, resp, "role");
+        CookieUtil.deleteCookie(req, resp, "JSESSIONID");
+        
+        // Add cache control headers
+        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        resp.setHeader("Pragma", "no-cache");
+        resp.setHeader("Expires", "0");
+        
+        resp.sendRedirect(req.getContextPath() + "/login");
+    }
 }
+

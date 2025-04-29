@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Servlet implementation for handling dashboard-related HTTP requests.
  * 
- * This servlet manages interactions with the DashboardService to fetch student
+ * This servlet manages interactions with the DashboardService to fetch user
  * information, handle updates, and manage student data. It forwards requests to
  * appropriate JSP pages or handles POST actions based on the request
  * parameters.

@@ -38,7 +38,7 @@ public class RegisterController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			// Validate and extract student model
+			// Validate and extract user model
 			String validationMessage = validateRegistrationForm(req);
 			if (validationMessage != null) {
 				handleError(req, resp, validationMessage);

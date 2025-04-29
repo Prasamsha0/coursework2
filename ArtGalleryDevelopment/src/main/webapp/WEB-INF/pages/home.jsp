@@ -11,8 +11,9 @@
     <nav class="navbar">
       <div class="logo">MANDALA STUDIOS</div>
       <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Manage Information</a></li>
+		<li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+        <li><a href="${pageContext.request.contextPath}/userUpdate">Manage Information</a></li>
+        <!-- Fix the double quotes issue -->
         <li><a href="#">About Us</a></li>
         <li><a href="#">Contact Us</a></li>
       </ul>
@@ -55,7 +56,7 @@
 
   <section class="abstract-section">
     <div class="abstract-img">
-      <img src="images/home/abstract.png" alt="Abstract Art">
+      <img src="images/abstract.png" alt="Abstract Art">
     </div>
     <div class="abstract-text">
       <h2>abstract arts</h2>
@@ -67,10 +68,10 @@
   <section class="buddhist-art">
     <h3>Buddhist art works</h3>
     <div class="buddha-art">
-      <img src="images/home/buddha1.png" alt="Buddha Art 1">
-      <img src="images/home/buddha2.png" alt="Buddha Art 2">
-      <img src="images/home/buddha3.png" alt="Buddha Art 3">
-      <img src="images/home/buddha4.png" alt="Buddha Art 4">
+      <img src="images/buddha1.png" alt="Buddha Art 1">
+      <img src="images/buddha2.png" alt="Buddha Art 2">
+      <img src="images/buddha3.png" alt="Buddha Art 3">
+      <img src="images/buddha4.png" alt="Buddha Art 4">
     </div>
   </section>
 

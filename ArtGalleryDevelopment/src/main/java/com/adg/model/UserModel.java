@@ -5,7 +5,6 @@ import java.sql.Date;
 
 
 
-
 public class UserModel {
     private int userId;
     private String userName;
@@ -51,6 +50,13 @@ public class UserModel {
 	}
 
 
+	
+	public UserModel(int int1, String string, String string2, String string3, String string4, Date date, int int2) {
+		// TODO Auto-generated constructor stub
+	}
+	public UserModel() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * @return the userId
 	 */

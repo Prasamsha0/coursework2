@@ -22,41 +22,42 @@ public class AuthenticationFilter implements Filter {
         String path = req.getRequestURI();
         String contextPath = req.getContextPath();
 
-        // Allow access to login, logout, register, static resources
+        // Allow access to login, logout, register, public static assets
         if (path.contains("/login") || path.contains("/logout") || path.contains("/register")
-                || path.contains(".css") || path.contains(".js") || path.contains(".png") || path.contains(".jpg")) {
+                || path.contains(".css") || path.contains(".js") || path.contains(".png") || path.contains(".jpg")
+                || path.contains("/access-denied.jsp")) {
             chain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        // Get session and role
+        // Session and role check
         Object username = SessionUtil.getAttribute(req, "username");
         Cookie roleCookie = CookieUtil.getCookie(req, "role");
         String role = (roleCookie != null) ? roleCookie.getValue() : null;
 
-        // If not logged in, redirect to login
+        // Not logged in — redirect to login
         if (username == null || role == null) {
             resp.sendRedirect(contextPath + "/login");
             return;
         }
 
-        // Role-based access control
-        if (path.contains("/dashboard") && !"admin".equalsIgnoreCase(role)) {
-            resp.sendRedirect(contextPath + "/home");
-            return;
-        }
-     // Fix this block:
-        if (path.contains("/userUpdate") && !"user".equalsIgnoreCase(role)) {
-            resp.sendRedirect(contextPath + "/dashboard");
-            return;
+        // Admin-only pages
+        if (path.contains("/dashboard") || path.contains("/ManageArtwork") || path.contains("/artlist")) {
+            if (!"admin".equalsIgnoreCase(role)) {
+                req.getRequestDispatcher("/WEB-INF/pages/access-denied.jsp").forward(req, resp);
+                return;
+            }
         }
 
-        if ((path.contains("/home") || path.contains("/userUpdate")) && !"user".equalsIgnoreCase(role)) {
-            resp.sendRedirect(contextPath + "/dashboard");
-            return;
+        // User-only pages
+        if (path.contains("/home") || path.contains("/userUpdate")) {
+            if (!"user".equalsIgnoreCase(role)) {
+                req.getRequestDispatcher("/WEB-INF/pages/access-denied.jsp").forward(req, resp);
+                return;
+            }
         }
 
-        // If everything is valid, continue
+        // All checks passed
         chain.doFilter(servletRequest, servletResponse);
     }
 

@@ -1,130 +1,143 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="jakarta.servlet.http.HttpSession"%>
-<%@ page import="jakarta.servlet.http.HttpServletRequest"%>
-
-<%
-// Initialize necessary objects and variables
-HttpSession userSession = request.getSession(false);
-String currentUser = (String) (userSession != null ? userSession.getAttribute("username") : null);
-// need to add data in attribute to select it in JSP code using JSTL core tag
-pageContext.setAttribute("currentUser", currentUser);
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="jakarta.servlet.http.HttpSession, jakarta.servlet.http.HttpServletRequest" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.adg.util.CookieUtil" %>
 <%
-// Check both session and cookie
-HttpServletRequest req = (HttpServletRequest) pageContext.getRequest();
-Cookie roleCookie = CookieUtil.getCookie(req, "role");
-
-if (userSession == null || currentUser == null || roleCookie == null) {
-    ((HttpServletResponse) pageContext.getResponse()).sendRedirect(req.getContextPath() + "/login");
-    return;
-}
+    HttpSession userSession = request.getSession(false);
+    String currentUser = (String) (userSession != null ? userSession.getAttribute("username") : null);
+    pageContext.setAttribute("currentUser", currentUser);
+    HttpServletRequest req = (HttpServletRequest) pageContext.getRequest();
+    if (userSession == null || currentUser == null || CookieUtil.getCookie(req, "role") == null) {
+        ((HttpServletResponse) pageContext.getResponse()).sendRedirect(req.getContextPath() + "/login");
+        return;
+    }
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Mandala Studios</title>
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/home.css?v=1.0"/>
+  <title>Mandala Studios - Home</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css" />
+  <script defer src="${pageContext.request.contextPath}/js/lightbox.js"></script>
 </head>
 <body>
-  <header>
-    <nav class="navbar">
-      <div class="logo">MANDALA STUDIOS</div>
-      <ul class="nav-links">
-		<li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-        <li><a href="${pageContext.request.contextPath}/userUpdate">Manage Information</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact Us</a></li>
-      </ul>
-      <div class="search-bar">
-        <input type="text" placeholder="search">
-        <button>X</button>
-      </div>
-      <div class="logout">
-      <a href="${pageContext.request.contextPath}/logout">LOGOUT</a>
-      </div>
-    </nav>
-  </header>
 
-  <section class="featured-section">
-    <h2>Featured Artworks</h2>
-    <div class="carousel">
-      <button class="left-arrow">&#10094;</button>
-      <img src="images/featured.png" alt="Featured Art">
-      <button class="right-arrow">&#10095;</button>
-    </div>
-  </section>
+<jsp:include page="/WEB-INF/pages/header.jsp" />
 
-  <section class="top-rated">
-    <h3>Top Rated</h3>
-    <div class="artworks">
-      <div class="art-item">
-        <img src="images/sanvij.png" alt="Sanjiv Gurung">
-        <p>Sanjiv Gurung</p>
-      </div>
-      <div class="art-item">
-        <img src="images/devi.png" alt="Devi Sakya">
-        <p>Devi Sakya</p>
-      </div>
-      <div class="art-item">
-        <img src="images/krishna.png" alt="Krishna Rai">
-        <p>Krishna Rai</p>
-      </div>
-    </div>
-  </section>
+<!-- Featured Section -->
+<section class="featured">
+  <div class="featured-text">
+    <h1>Explore Timeless Nepali Art</h1>
+    <p>Discover cultural expressions through brush and pigment, captured by the finest Nepali artists.</p>
+    <button>Browse Gallery</button>
+  </div>
+  <div class="featured-image">
+    <img src="images/featured.png" alt="Featured Art">
+  </div>
+</section>
 
-  <section class="abstract-section">
-    <div class="abstract-img">
-      <img src="images/abstract.png" alt="Abstract Art">
+<!-- Top Rated Artworks -->
+<section class="artwork-section">
+  <h2>Top Rated</h2>
+  <div class="art-grid">
+    <div class="art-card">
+      <img src="images/krishna.png" alt="Krishna Rai" onclick="openLightbox(this)">
+      <div class="info">
+        <p><strong>Artist:</strong> Krishna Rai</p>
+        <p><strong>Price:</strong> NPR 12,500</p>
+        <p><strong>Rating:</strong> ★★★★★</p>
+        <p><strong>Medium:</strong> Watercolor</p>
+      </div>
     </div>
-    <div class="abstract-text">
-      <h2>abstract arts</h2>
-      <p>Abstract art is a visual language of shapes, colors, and forms that goes beyond realistic representation. It invites viewers to feel and interpret freely, sparking imagination and emotion without needing a clear subject.</p>
-      <button>see more</button>
+    <div class="art-card">
+      <img src="images/devi.png" alt="Devi Sakya" onclick="openModal(this.src)">
+      <div class="info">
+        <p><strong>Artist:</strong> Devi Sakya</p>
+        <p><strong>Price:</strong> NPR 18,000</p>
+        <p><strong>Rating:</strong> ★★★★★</p>
+        <p><strong>Medium:</strong> Acrylic</p>
+      </div>
     </div>
-  </section>
+    <div class="art-card">
+      <img src="images/sanvij.png" alt="Sanjiv Gurung" onclick="openModal(this.src)">
+      <div class="info">
+        <p><strong>Artist:</strong> Sanjiv Gurung</p>
+        <p><strong>Price:</strong> NPR 15,000</p>
+        <p><strong>Rating:</strong> ★★★★☆</p>
+        <p><strong>Medium:</strong> Oil on Canvas</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <section class="buddhist-art">
-    <h3>Buddhist art works</h3>
-    <div class="buddha-art">
-      <img src="images/buddha1.png" alt="Buddha Art 1">
-      <img src="images/buddha2.png" alt="Buddha Art 2">
-      <img src="images/buddha3.png" alt="Buddha Art 3">
-      <img src="images/buddha4.png" alt="Buddha Art 4">
+<!-- Buddhist Artworks -->
+<section class="artwork-section alt-bg">
+  <h2>Buddhist Artworks</h2>
+  <div class="art-grid">
+    <div class="art-card">
+      <img src="images/buddha1.png" alt="Buddha 1" onclick="openLightbox(this)">
+      <div class="info">
+        <p><strong>Artist:</strong> Lama Tashi</p>
+        <p><strong>Price:</strong> NPR 20,000</p>
+        <p><strong>Rating:</strong> ★★★★☆</p>
+        <p><strong>Medium:</strong> Thangka</p>
+      </div>
     </div>
-  </section>
+    <div class="art-card">
+      <img src="images/buddha2.png" alt="Buddha 2" onclick="openModal(this.src)">
+      <div class="info">
+        <p><strong>Artist:</strong> Pema Doma</p>
+        <p><strong>Price:</strong> NPR 25,000</p>
+        <p><strong>Rating:</strong> ★★★★★</p>
+        <p><strong>Medium:</strong> Natural Pigment</p>
+      </div>
+    </div>
+    <div class="art-card">
+      <img src="images/buddha3.png" alt="Buddha 3" onclick="openModal(this.src)">
+      <div class="info">
+        <p><strong>Artist:</strong> Karma Dorje</p>
+        <p><strong>Price:</strong> NPR 19,000</p>
+        <p><strong>Rating:</strong> ★★★★☆</p>
+        <p><strong>Medium:</strong> Acrylic</p>
+      </div>
+    </div>
+    <div class="art-card">
+      <img src="images/buddha4.png" alt="Buddha 4" onclick="openModal(this.src)">
+      <div class="info">
+        <p><strong>Artist:</strong> Sonam Tamang</p>
+        <p><strong>Price:</strong> NPR 20,500</p>
+        <p><strong>Rating:</strong> ★★★★★</p>
+        <p><strong>Medium:</strong> Mixed Media</p>
+      </div>
+    </div>
+	<div class="art-card">
+      <img src="images/buddha5.png" alt="Buddha 5" onclick="openModal(this.src)">
+      <div class="info">
+        <p><strong>Artist:</strong> Sonam Tamang</p>
+        <p><strong>Price:</strong> NPR 20,500</p>
+        <p><strong>Rating:</strong> ★★★★★</p>
+        <p><strong>Medium:</strong> Mixed Media</p>
+      </div>
+    </div>
+    <div class="art-card">
+      <img src="images/buddha6.png" alt="Buddha 4" onclick="openModal(this.src)">
+      <div class="info">
+        <p><strong>Artist:</strong> Sonam Tamang</p>
+        <p><strong>Price:</strong> NPR 20,500</p>
+        <p><strong>Rating:</strong> ★★★★★</p>
+        <p><strong>Medium:</strong> Mixed Media</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    <div class="footer-content">
-      <div class="faq">
-        <h4>FAQs</h4>
-        <p>Where are we located?<br>
-        What are our prices like?<br>
-        Are guided tours available?<br>
-        Who do I contact for more information?<br>
-        What are the gallery's opening hours?</p>
-      </div>
-      <div class="contact">
-        <h4>Contact US</h4>
-        <p>Kathmandu , Thapathali<br>
-        98123456789, 01-4345672<br>
-        mandalastudios@icloud.com</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="brand">MANDALA STUDIOS</div>
-      <p>2025 Mandala Studios. All Rights Reserved.</p>
-      <div class="socials">
-        <img src="images/tiktok-icon.png" alt="TikTok">
-        <img src="images/facebook-icon.png" alt="Facebook">
-        <img src="images/instagram-icon.png" alt="Instagram">
-        <img src="images/youtube-icon.png" alt="YouTube">
-      </div>
-    </div>
-  </footer>
+<jsp:include page="/WEB-INF/pages/footer.jsp" />
+
+<!-- Lightbox Modal -->
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="Enlarged Art">
+</div>
+
 </body>
 </html>

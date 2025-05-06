@@ -42,7 +42,7 @@
 
       <div class="row">
         <input type="number" name="age" placeholder="Age" value="${age}" required />
-        <input type="text" name="repass" placeholder="Re-enter password" value="${repass}" required />
+        <input type="password" name="repass" placeholder="Re-enter password" value="${repass}" required />
       </div>
 
       <div class="row">

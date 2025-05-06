@@ -6,11 +6,6 @@ import java.sql.Date;
 import com.adg.model.UserModel;
 import com.adg.service.UpdateService;
 import com.adg.util.SessionUtil;
-import com.adg.service.LoginService;
-import com.adg.util.PasswordUtil;
-import com.adg.util.ValidationUtil;
-
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -55,14 +50,14 @@ public class UpdateControllerr extends HttpServlet {
             // Check session using the same attribute name as login
             String username = (String) SessionUtil.getAttribute(req, "username");
             if (username == null) {
-                resp.sendRedirect(req.getContextPath() + "/login");
+                resp.sendRedirect(req.getContextPath() + "/userUpdate");
                 return;
             }
             
             // Get user data from database
-            UserModel user = new LoginService().getUserByUsername(username);
+            UserModel user = new UpdateService().getUserByUsername(username);
             if (user == null) {
-                resp.sendRedirect(req.getContextPath() + "/login");
+                resp.sendRedirect(req.getContextPath() + "/userUpdate");
                 return;
             }
             
@@ -87,59 +82,53 @@ public class UpdateControllerr extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
-    	getServletContext().log("Inside doPost");
 
-	    HttpSession session = req.getSession();
+        String username = (String) SessionUtil.getAttribute(req, "username");
+        if (username == null) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
 
-	    // Check if the user is logged in
-	    UserModel currentUser = (UserModel) session.getAttribute("user");
-	    if (currentUser == null) {
-	        resp.sendRedirect("login");
-	        return;
-	    }
-        // Retrieve user data from request parameters
-		String username = req.getParameter("userName");
-		String contact = req.getParameter("contact");
-		String address = req.getParameter("address");
-		String email = req.getParameter("email");
-		String password = req.getParameter("password");
-		int age = Integer.parseInt(req.getParameter("age"));
-		String gender = req.getParameter("gender");
-		String repass = req.getParameter("repass");
-		Date dob = Date.valueOf(req.getParameter("dob"));
-
-	    boolean hasError=false;
-
-	    UserModel user = new UserModel(
-	    	    currentUser.getUserId(),
-	    	    username,
-	    	    contact,
-	    	    address,
-	    	    email,
-	    	    password != null && !password.isEmpty() ? password : currentUser.getPassword(),
-	    	    age,
-	    	    currentUser.getGender(),
-	    	    dob
-	    	);
-
-
-	    
-	    LoginService dao = new LoginService();
-        boolean updated = false;
+        // Get form parameters
+        String name = req.getParameter("userName");
+        String email = req.getParameter("email");
+        String contact = req.getParameter("contact");
+        String address = req.getParameter("address");
+        String dobStr = req.getParameter("dob");
+        String ageStr = req.getParameter("age");
 
         try {
-            updated = dao.updateUser(user);  // Update user in the database
+            int age = Integer.parseInt(ageStr);
+            Date dob = Date.valueOf(dobStr); // Must be yyyy-MM-dd format
+
+            // Set updated values
+            UserModel user = new UserModel();
+            user.setUserName(username);
+            user.setEmail(email);
+            user.setContact(contact);
+            user.setAddress(address);
+            user.setDob(dob);
+            user.setAge(age);
+
+            boolean success = new UpdateService().updateUser(user);
+
+            if (success) {
+                req.setAttribute("successMessage", "Profile updated successfully.");
+            } else {
+                req.setAttribute("errorMessage", "Failed to update profile.");
+            }
+
+            req.setAttribute("user", user);
+            req.getRequestDispatcher("/WEB-INF/pages/update.jsp").forward(req, resp);
+
         } catch (Exception e) {
             e.printStackTrace();
+            req.setAttribute("errorMessage", "Invalid input data.");
+            req.getRequestDispatcher("/WEB-INF/pages/update.jsp").forward(req, resp);
         }
+        System.out.println("New name: " + name);
 
-        if (updated) {
-            // Update session with the updated user data
-        	session.setAttribute("user", user);
-            resp.sendRedirect(req.getContextPath() + "/userUpdate");
-        } else {
-            resp.sendRedirect("error.jsp");
-        }
     }
+
 	
 }

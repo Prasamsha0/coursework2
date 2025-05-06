@@ -66,4 +66,49 @@ public class ValidationUtil {
         LocalDate today = LocalDate.now();
         return Period.between(dob, today).getYears() >= 16;
     }
+    // Check if string contains only letters and spaces
+    public static boolean isAlphabeticWithSpaces(String value) {
+        return value != null && value.matches("^[a-zA-Z ]+$");
+    }
+
+    // 11. Validate artwork name
+    public static boolean isValidArtworkName(String name) {
+        return !isNullOrEmpty(name) && isAlphabeticWithSpaces(name);
+    }
+
+    // 12. Validate artist name
+    public static boolean isValidArtistName(String artist) {
+        return !isNullOrEmpty(artist) && isAlphabeticWithSpaces(artist);
+    }
+
+    // 13. Validate that artwork date is not in the future
+    public static boolean isValidArtworkDate(LocalDate date) {
+        return date != null && !date.isAfter(LocalDate.now());
+    }
+
+    // 14. Validate artwork medium (non-empty)
+    public static boolean isValidArtworkMedium(String medium) {
+        return !isNullOrEmpty(medium);
+    }
+
+    // 15. Validate artwork price (positive value)
+    public static boolean isValidArtworkPrice(double price) {
+        return price > 0;
+    }
+
+    // 16. Validate artwork category (must match allowed list)
+    public static boolean isValidArtworkCategory(String category) {
+        return category != null && switch (category) {
+            case "Contemporary", "Traditional", "Buddhist", "Abstract" -> true;
+            default -> false;
+        };
+    }
+
+    // 17. Validate artwork format (must match allowed list)
+    public static boolean isValidArtworkFormat(String format) {
+        return format != null && switch (format) {
+            case "Canvas", "Scroll", "Digital", "Framed" -> true;
+            default -> false;
+        };
+    }
 }

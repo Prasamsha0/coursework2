@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import com.adg.util.PasswordUtil;
+import com.adg.util.ValidationUtil;
 
 /**
  * Servlet implementation for handling user update operations.
@@ -129,6 +131,8 @@ public class UpdateControllerr extends HttpServlet {
         System.out.println("New name: " + name);
 
     }
+    
+    
 
 	
 }

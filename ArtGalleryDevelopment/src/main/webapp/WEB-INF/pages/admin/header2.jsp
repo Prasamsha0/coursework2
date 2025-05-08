@@ -11,10 +11,7 @@
       <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
       <li><a href="${pageContext.request.contextPath}/ManageArtwork">Manage Artwork</a></li>
       <li><a href="${pageContext.request.contextPath}/artlist">View Artworks</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="#">Events</a></li>
-      <li><a href="#">About Us</a></li>
-      <li><a href="#">Contact Us</a></li>
+      <li><a href="${pageContext.request.contextPath}/userlist">View Artworks</a></li>
     </ul>
   </nav>
   <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Logout</a>

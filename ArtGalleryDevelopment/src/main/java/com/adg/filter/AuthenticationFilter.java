@@ -42,7 +42,7 @@ public class AuthenticationFilter implements Filter {
         }
 
         // Admin-only pages
-        if (path.contains("/dashboard") || path.contains("/ManageArtwork") || path.contains("/artlist")) {
+        if (path.contains("/dashboard") || path.contains("/ManageArtwork") || path.contains("/artlist") || path.contains("/userlist")) {
             if (!"admin".equalsIgnoreCase(role)) {
                 req.getRequestDispatcher("/WEB-INF/pages/access-denied.jsp").forward(req, resp);
                 return;

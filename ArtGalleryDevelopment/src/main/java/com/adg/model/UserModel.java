@@ -2,9 +2,10 @@ package com.adg.model;
 
 import java.sql.Date;
 
-
-
-
+/**
+ * UserModel represents the user data structure used across the application.
+ * It stores personal and login-related information of a user.
+ */
 public class UserModel {
     private int userId;
     private String userName;
@@ -14,188 +15,145 @@ public class UserModel {
     private String password;
     private int age;
     private String gender;
-    private String repass;
+    private String repass; // used during registration to confirm password
     private Date dob;
 
-    // Constructor
+    // ========================= Constructors =========================
+
+    /**
+     * Full constructor including all fields (used for complete user registration).
+     */
     public UserModel(int userId, String userName, String contact, String address, String email,
-                String password, int age, String gender, String repass , Date dob) {
+                     String password, int age, String gender, String repass, Date dob) {
         this.userId = userId;
         this.userName = userName;
         this.contact = contact;
         this.address = address;
         this.email = email;
         this.password = password;
-        this.age= age;
+        this.age = age;
         this.gender = gender;
         this.repass = repass;
         this.dob = dob;
     }
+
+    /**
+     * Constructor without repass (used for login or simplified views).
+     */
     public UserModel(int userId, String userName, String contact, String address, String email,
-            String password, int age, String gender,  Date dob) {
-    this.userId = userId;
-    this.userName = userName;
-    this.contact = contact;
-    this.address = address;
-    this.email = email;
-    this.password = password;
-    this.age= age;
-    this.gender = gender;
-    this.dob = dob;
-}
+                     String password, int age, String gender, Date dob) {
+        this.userId = userId;
+        this.userName = userName;
+        this.contact = contact;
+        this.address = address;
+        this.email = email;
+        this.password = password;
+        this.age = age;
+        this.gender = gender;
+        this.dob = dob;
+    }
 
-	public UserModel(String username, String pasword) {
-		this.userName = username;
-		this.password = pasword;
-	}
+    /**
+     * Constructor used for authentication (username and password only).
+     */
+    public UserModel(String username, String password) {
+        this.userName = username;
+        this.password = password;
+    }
 
+    /**
+     * Generic constructor —
+     */
+    public UserModel() {
+        // Default constructor
+    }
 
-	
-	public UserModel(int int1, String string, String string2, String string3, String string4, Date date, int int2) {
-		// TODO Auto-generated constructor stub
-	}
-	public UserModel() {
-		// TODO Auto-generated constructor stub
-	}
-	/**
-	 * @return the userId
-	 */
-	public int getUserId() {
-		return userId;
-	}
+    /**
+     * Placeholder constructor (incomplete) — should be implemented or removed if unnecessary.
+     */
+    public UserModel(int id, String name, String contact, String address, String email, Date dob, int age) {
+        // TODO: Implement this constructor as needed
+    }
 
-	/**
-	 * @param userId the userId to set
-	 */
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+    // ========================= Getters & Setters =========================
 
-	/**
-	 * @return the userName
-	 */
-	public String getUserName() {
-		return userName;
-	}
+    public int getUserId() {
+        return userId;
+    }
 
-	/**
-	 * @param userName the userName to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-	/**
-	 * @return the contact
-	 */
-	public String getContact() {
-		return contact;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	/**
-	 * @param contact the contact to set
-	 */
-	public void setContact(String contact) {
-		this.contact = contact;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
+    public String getContact() {
+        return contact;
+    }
 
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
 
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	/**
-	 * @return the age
-	 */
-	public int getAge() {
-		return age;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	/**
-	 * @param age the age to set
-	 */
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	/**
-	 * @return the gender
-	 */
-	public String getGender() {
-		return gender;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	/**
-	 * @param gender the gender to set
-	 */
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-	/**
-	 * @return the repass
-	 */
-	public String getrepass() {
-		return repass;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	/**
-	 * @param repass the repass to set
-	 */
-	public void setrepass(String repass) {
-		this.repass = repass;
-	}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	/**
-	 * @return the dob
-	 */
-	public Date getDob() {
-		return dob;
-	}
+    public String getRepass() {
+        return repass;
+    }
 
-	/**
-	 * @param dob the dob to set
-	 */
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
+    public void setRepass(String repass) {
+        this.repass = repass;
+    }
 
-    
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
 }

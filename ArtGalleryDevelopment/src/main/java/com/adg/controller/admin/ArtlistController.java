@@ -1,7 +1,7 @@
 package com.adg.controller.admin;
 
-import com.adg.service.CrudService;
 import com.adg.model.ArtworkModel;
+import com.adg.service.CrudService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -9,25 +9,39 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet for handling listing, updating, and deleting artworks in the admin panel.
+ */
 @WebServlet(asyncSupported = true, urlPatterns = { "/artlist" })
 public class ArtlistController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private final CrudService crudService = new CrudService();
 
-    private CrudService crudService = new CrudService();
-
+    /**
+     * Handles GET requests for:
+     * - Deleting artwork when action=delete is passed.
+     * - Displaying the artwork list.
+     */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Handle deletion
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String action = request.getParameter("action");
         String artworkIdParam = request.getParameter("artworkId");
 
-        if ("delete".equals(action) && artworkIdParam != null) {
-            int artworkId = Integer.parseInt(artworkIdParam);
-            crudService.deleteArtworkById(artworkId);
-            response.sendRedirect(request.getContextPath() + "/artlist");
-            return;
+        // Handle deletion if requested
+        if ("delete".equalsIgnoreCase(action) && artworkIdParam != null) {
+            try {
+                int artworkId = Integer.parseInt(artworkIdParam);
+                crudService.deleteArtworkById(artworkId);
+                response.sendRedirect(request.getContextPath() + "/artlist");
+                return;
+            } catch (NumberFormatException e) {
+                response.sendError(400, "Invalid artwork ID.");
+                return;
+            }
         }
 
-        // Load artworks
+        // Load and display all artworks
         try {
             List<ArtworkModel> artworks = crudService.getAllArtworks();
             request.setAttribute("artworks", artworks);
@@ -38,9 +52,14 @@ public class ArtlistController extends HttpServlet {
         }
     }
 
+    /**
+     * Handles POST requests for updating artwork details.
+     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
+            // Extract form parameters
             int artworkId = Integer.parseInt(request.getParameter("artworkId"));
             String name = request.getParameter("artworkName");
             String artist = request.getParameter("artistName");
@@ -50,6 +69,7 @@ public class ArtlistController extends HttpServlet {
             String category = request.getParameter("artworkCategory");
             String format = request.getParameter("artworkFormat");
 
+            // Populate artwork model
             ArtworkModel updatedArtwork = new ArtworkModel();
             updatedArtwork.setArtworkId(artworkId);
             updatedArtwork.setArtworkName(name);
@@ -60,9 +80,12 @@ public class ArtlistController extends HttpServlet {
             updatedArtwork.setArtworkCategory(category);
             updatedArtwork.setArtworkFormat(format);
 
+            // Update artwork in database
             crudService.updateArtwork(updatedArtwork);
 
             response.sendRedirect(request.getContextPath() + "/artlist");
+        } catch (NumberFormatException e) {
+            response.sendError(400, "Invalid number format for ID or price.");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(500, "Failed to update artwork.");

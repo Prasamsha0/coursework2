@@ -11,7 +11,7 @@
       <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
       <li><a href="${pageContext.request.contextPath}/ManageArtwork">Manage Artwork</a></li>
       <li><a href="${pageContext.request.contextPath}/artlist">View Artworks</a></li>
-      <li><a href="${pageContext.request.contextPath}/userlist">View Artworks</a></li>
+      <li><a href="${pageContext.request.contextPath}/userlist">View Users</a></li>
     </ul>
   </nav>
   <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Logout</a>

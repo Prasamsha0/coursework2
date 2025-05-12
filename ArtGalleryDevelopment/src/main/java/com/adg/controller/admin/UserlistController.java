@@ -1,45 +1,45 @@
 package com.adg.controller.admin;
 
+import com.adg.model.UserModel;
+import com.adg.service.UserService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-import com.adg.model.UserModel;
-import com.adg.service.UserService;
 /**
- * Servlet implementation class UserlistController
+ * Controller for displaying the list of users in the admin panel.
  */
 @WebServlet(asyncSupported = true, urlPatterns = { "/userlist" })
 public class UserlistController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+    private static final long serialVersionUID = 1L;
+
+    private final UserService userService = new UserService();
+
     /**
-     * @see HttpServlet#HttpServlet()
+     * Handles GET requests to load all users and forward to the user list page.
      */
-    public UserlistController() {
-        super();
-        // TODO Auto-generated constructor stub
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            List<UserModel> users = userService.getAllUsers();
+            request.setAttribute("users", users);
+            request.getRequestDispatcher("/WEB-INF/pages/admin/userlist.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to load user list.");
+        }
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<UserModel> users = new UserService().getAllUsers();
-        request.setAttribute("users", users);
-        request.getRequestDispatcher("/WEB-INF/pages/admin/userlist.jsp").forward(request, response);
+    /**
+     * Redirects POST requests to GET logic.
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
     }
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }

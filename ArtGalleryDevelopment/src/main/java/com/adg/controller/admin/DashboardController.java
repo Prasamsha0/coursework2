@@ -1,39 +1,49 @@
 package com.adg.controller.admin;
 
+import com.adg.model.ArtworkModel;
+import com.adg.model.UserModel;
+import com.adg.service.DashboardService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
-import java.sql.*;
+import java.util.List;
 
-import com.adg.config.DbConfig;
-
+/**
+ * Controller for admin dashboard displaying summary statistics
+ * and recent users and artworks.
+ */
 @WebServlet("/dashboard")
 public class DashboardController extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int userCount = 0;
-        int artworkCount = 0;
+    private static final long serialVersionUID = 1L;
 
-        try (Connection conn = DbConfig.getConnection()) {
-            PreparedStatement userStmt = conn.prepareStatement("SELECT COUNT(*) FROM user");
-            ResultSet userRs = userStmt.executeQuery();
-            if (userRs.next()) {
-                userCount = userRs.getInt(1);
-            }
+    private final DashboardService dashboardService = new DashboardService();
 
-            PreparedStatement artworkStmt = conn.prepareStatement("SELECT COUNT(*) FROM artwork");
-            ResultSet artworkRs = artworkStmt.executeQuery();
-            if (artworkRs.next()) {
-                artworkCount = artworkRs.getInt(1);
-            }
+    /**
+     * Handles GET requests to load dashboard data.
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            // Retrieve statistics and recent entries
+            int userCount = dashboardService.getUserCount();
+            int artworkCount = dashboardService.getArtworkCount();
+            List<UserModel> recentUsers = dashboardService.getRecentUsers(5);
+            List<ArtworkModel> recentArtworks = dashboardService.getRecentArtworks(5);
 
+            // Set data into request scope
             request.setAttribute("userCount", userCount);
             request.setAttribute("artworkCount", artworkCount);
+            request.setAttribute("recentUsers", recentUsers);
+            request.setAttribute("recentArtworks", recentArtworks);
 
+            // Forward to JSP
+            request.getRequestDispatcher("/WEB-INF/pages/admin/dashboard.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Dashboard data loading failed.");
         }
-
-        request.getRequestDispatcher("/WEB-INF/pages/admin/dashboard.jsp").forward(request, response);
     }
 }

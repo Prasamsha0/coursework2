@@ -13,7 +13,7 @@
 <jsp:include page="/WEB-INF/pages/admin/header2.jsp" />
 <div class="container">
   <div class="image-section">
-    <img src="${contextPath}/images/art_form.png" alt="Artwork Illustration" />
+    <img src="${contextPath}/images/devi.png" alt="Artwork Illustration" />
   </div>
 
   <div class="form-section">

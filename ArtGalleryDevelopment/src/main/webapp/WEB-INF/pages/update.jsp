@@ -25,6 +25,14 @@
         <!-- Profile Form -->
         <div class="form-section">
             <h2>Edit Your Profile</h2>
+            <c:if test="${not empty successMessage}">
+    		<p class="success-message" style="color: green;">${successMessage}</p>
+			</c:if>
+
+			<c:if test="${not empty errorMessage}">
+   			<p class="error-message" style="color: red;">${errorMessage}</p>
+			</c:if>
+            
             <form action="${contextPath}/userUpdate" method="post">
                 <div class="form-row">
                     <div class="form-group">
@@ -58,6 +66,16 @@
                         <input type="text" name="address" value="${user.address}" required />
                     </div>
                 </div>
+                <div class="form-row">
+    		<div class="form-group">
+        		<label>New Password (optional)</label>
+        		<input type="password" name="password" placeholder="Enter new password" />
+    </div>
+    <div class="form-group">
+        <label>Retype Password</label>
+        <input type="password" name="repass" placeholder="Retype new password" />
+    </div>
+</div>
 
                 <button type="submit">Save</button>
             </form>

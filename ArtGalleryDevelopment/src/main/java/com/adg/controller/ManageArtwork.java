@@ -13,33 +13,35 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * Servlet responsible for managing the creation of new artwork records.
+ */
 @WebServlet(asyncSupported = true, urlPatterns = {"/ManageArtwork"})
 public class ManageArtwork extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
-    public ManageArtwork() {
-        super();
-    }
+    private final CrudService crudService = new CrudService();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Forward to artwork management page
         request.getRequestDispatcher("/WEB-INF/pages/admin/manageartwork.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         try {
-            // Validate input
+            // Validate input fields
             String validationMessage = validateArtworkForm(req);
             if (validationMessage != null) {
                 handleError(req, resp, validationMessage);
                 return;
             }
 
-            // Extract artwork model
+            // Extract data into model and persist
             ArtworkModel artwork = extractArtworkModel(req);
-            CrudService service = new CrudService();
-            boolean isAdded = service.insert(artwork);
+            boolean isAdded = crudService.insert(artwork);
 
             if (isAdded) {
                 handleSuccess(req, resp, "Artwork added successfully!", "/WEB-INF/pages/admin/manageartwork.jsp");
@@ -53,6 +55,10 @@ public class ManageArtwork extends HttpServlet {
         }
     }
 
+    /**
+     * Validates the incoming request parameters related to artwork form.
+     * @return error message if invalid, or null if valid
+     */
     private String validateArtworkForm(HttpServletRequest req) {
         String name = req.getParameter("artworkName");
         String artist = req.getParameter("artistName");
@@ -61,10 +67,8 @@ public class ManageArtwork extends HttpServlet {
         String priceStr = req.getParameter("artworkPrice");
         String category = req.getParameter("artworkCategory");
         String format = req.getParameter("artworkFormat");
-        System.out.println(name);
-        System.out.println(artist);
-        System.out.println(dateStr);
-        System.out.println(priceStr);
+
+        // Required field checks
         if (ValidationUtil.isNullOrEmpty(name)) return "Artwork name is required.";
         if (ValidationUtil.isNullOrEmpty(artist)) return "Artist name is required.";
         if (ValidationUtil.isNullOrEmpty(dateStr)) return "Artwork date is required.";
@@ -73,35 +77,34 @@ public class ManageArtwork extends HttpServlet {
         if (ValidationUtil.isNullOrEmpty(category)) return "Artwork category is required.";
         if (ValidationUtil.isNullOrEmpty(format)) return "Artwork format is required.";
 
+        // Format and value validation
+        if (!ValidationUtil.isValidArtworkName(name)) return "Invalid artwork name.";
+        if (!ValidationUtil.isValidArtistName(artist)) return "Invalid artist name.";
+        if (!ValidationUtil.isValidArtworkMedium(medium)) return "Invalid medium.";
+        if (!ValidationUtil.isValidArtworkCategory(category)) return "Invalid artwork category.";
+        if (!ValidationUtil.isValidArtworkFormat(format)) return "Invalid artwork format.";
 
-		if (!ValidationUtil.isValidArtworkName(name)) return "Invalid artwork name.";
-		if (!ValidationUtil.isValidArtistName(artist)) return "Invalid artist name.";
-		if (!ValidationUtil.isValidArtworkMedium(medium)) return "Medium is required.";
-		if (!ValidationUtil.isValidArtworkCategory(category)) return "Invalid artwork category.";
-		if (!ValidationUtil.isValidArtworkFormat(format)) return "Invalid artwork format.";
+        try {
+            double price = Double.parseDouble(priceStr);
+            if (!ValidationUtil.isValidArtworkPrice(price)) return "Price must be greater than 0.";
+        } catch (NumberFormatException e) {
+            return "Price must be a valid number.";
+        }
 
-		
-		double price;
-		try {
-		    price = Double.parseDouble(priceStr);
-		    if (!ValidationUtil.isValidArtworkPrice(price)) return "Price must be greater than 0.";
-		} catch (NumberFormatException e) {
-		    return "Price must be a valid number.";
-		}
-		
-		LocalDate date;
-		try {
-		    date = LocalDate.parse(dateStr);
-		    if (!ValidationUtil.isValidArtworkDate(date)) return "Artwork date cannot be in the future.";
-		} catch (Exception e) {
-		    return "Invalid artwork date.";
-		}
+        try {
+            LocalDate date = LocalDate.parse(dateStr);
+            if (!ValidationUtil.isValidArtworkDate(date)) return "Artwork date cannot be in the future.";
+        } catch (Exception e) {
+            return "Invalid artwork date.";
+        }
+
         return null;
-
     }
 
+    /**
+     * Constructs an ArtworkModel from form data.
+     */
     private ArtworkModel extractArtworkModel(HttpServletRequest req) {
-        int id = 0; // default for new records
         String name = req.getParameter("artworkName");
         String artist = req.getParameter("artistName");
         Date date = Date.valueOf(req.getParameter("artworkDate"));
@@ -112,18 +115,24 @@ public class ManageArtwork extends HttpServlet {
 
         return new ArtworkModel(0, name, artist, date, medium, price, category, format);
     }
-   
+
+    /**
+     * Handles successful form submission.
+     */
     private void handleSuccess(HttpServletRequest req, HttpServletResponse resp, String message, String redirectPage)
             throws ServletException, IOException {
         req.setAttribute("success", message);
         req.getRequestDispatcher(redirectPage).forward(req, resp);
     }
 
+    /**
+     * Handles validation or internal error by preserving form data.
+     */
     private void handleError(HttpServletRequest req, HttpServletResponse resp, String error)
             throws ServletException, IOException {
         req.setAttribute("error", error);
 
-        // Preserve form data
+        // Preserve user-entered data on form
         req.setAttribute("artworkName", req.getParameter("artworkName"));
         req.setAttribute("artistName", req.getParameter("artistName"));
         req.setAttribute("artworkDate", req.getParameter("artworkDate"));

@@ -2,33 +2,55 @@ package com.adg.model;
 
 import java.sql.Date;
 
+/**
+ * Represents an artwork with all its key details like name, artist, date, medium, etc.
+ */
 public class ArtworkModel {
 
+    // Unique identifier for the artwork
     private int artworkId;
+
+    // Name/title of the artwork
     private String artworkName;
+
+    // Name of the artist who created the artwork
     private String artistName;
+
+    // Date when the artwork was created
     private Date artworkDate;
+
+    // Medium used (e.g., oil, watercolor, digital)
     private String artworkMedium;
+
+    // Price of the artwork
     private double artworkPrice;
+
+    // Category or genre of the artwork (e.g., abstract, landscape)
     private String artworkCategory;
+
+    // Format of the artwork (e.g., painting, sculpture, digital file)
     private String artworkFormat;
 
-    // Constructors
+    // Default constructor
     public ArtworkModel() {}
 
-    public ArtworkModel(int artworkId, String artworkName, String artistName, Date date,
-                   String artworkMedium, double price, String artworkCategory, String artworkFormat) {
+    /**
+     * Parameterized constructor to create an artwork with all details.
+     */
+    public ArtworkModel(int artworkId, String artworkName, String artistName, Date artworkDate,
+                        String artworkMedium, double artworkPrice, String artworkCategory, String artworkFormat) {
         this.artworkId = artworkId;
         this.artworkName = artworkName;
         this.artistName = artistName;
-        this.artworkDate = date;
+        this.artworkDate = artworkDate;
         this.artworkMedium = artworkMedium;
-        this.artworkPrice = price;
+        this.artworkPrice = artworkPrice;
         this.artworkCategory = artworkCategory;
         this.artworkFormat = artworkFormat;
     }
 
     // Getters and Setters
+
     public int getArtworkId() {
         return artworkId;
     }
@@ -69,12 +91,12 @@ public class ArtworkModel {
         this.artworkMedium = artworkMedium;
     }
 
-    public Double getArtworkPrice() {
+    public double getArtworkPrice() {
         return artworkPrice;
     }
 
-    public void setArtworkPrice(double d) {
-        this.artworkPrice = d;
+    public void setArtworkPrice(double artworkPrice) {
+        this.artworkPrice = artworkPrice;
     }
 
     public String getArtworkCategory() {
@@ -93,6 +115,9 @@ public class ArtworkModel {
         this.artworkFormat = artworkFormat;
     }
 
+    /**
+     * Provides a readable string representation of the artwork object.
+     */
     @Override
     public String toString() {
         return "Artwork{" +

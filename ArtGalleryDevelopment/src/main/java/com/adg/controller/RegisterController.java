@@ -1,5 +1,6 @@
 package com.adg.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -33,6 +34,7 @@ public class RegisterController extends HttpServlet {
 
     // Service class to handle database logic
     private final RegisterService registerService = new RegisterService();
+    private final ImageUtil imageUtil = new ImageUtil();
 
     // Display the registration page (GET request)
     @Override
@@ -41,32 +43,41 @@ public class RegisterController extends HttpServlet {
     }
 
     // Handle form submission (POST request)
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            // Validate form data
-            String validationMessage = validateRegistrationForm(req);
-            if (validationMessage != null) {
-                handleError(req, resp, validationMessage);
-                return;
-            }
 
-            // Create UserModel object from request data
-            UserModel userModel = extractUserModel(req);
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			// Validate and extract student model
+			String validationMessage = validateRegistrationForm(req);
+			if (validationMessage != null) {
+				handleError(req, resp, validationMessage);
+				return;
+			}
 
-            // Insert user data into the database
-            boolean isAdded = registerService.insert(userModel);
+			UserModel userModel = extractUserModel(req);
+			Boolean isAdded = registerService.insert(userModel);
 
-            if (isAdded) {
-                handleSuccess(req, resp, "Registration successful!", "/WEB-INF/pages/login.jsp");
-            } else {
-                handleError(req, resp, "Could not register your account. Please try again later!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace(); // For debugging/logging
-            handleError(req, resp, "An unexpected error occurred. Please try again later!");
-        }
-    }
+			if (isAdded == null) {
+				handleError(req, resp, "Our server is under maintenance. Please try again later!");
+			} else if (isAdded) {
+				try {
+					if (uploadImage(req)) {
+						handleSuccess(req, resp, "Your account is successfully created!", "/WEB-INF/pages/login.jsp");
+					} else {
+						handleError(req, resp, "Could not upload the image. Please try again later!");
+					}
+				} catch (IOException | ServletException e) {
+					handleError(req, resp, "An error occurred while uploading the image. Please try again later!");
+					e.printStackTrace(); // Log the exception
+				}
+			} else {
+				handleError(req, resp, "Could not register your account. Please try again later!");
+			}
+		} catch (Exception e) {
+			handleError(req, resp, "An unexpected error occurred. Please try again later!");
+			e.printStackTrace(); // Log the exception
+		}
+	}
 
     /**
      * Validates the registration form input fields.
@@ -132,6 +143,15 @@ public class RegisterController extends HttpServlet {
 
         if (!ValidationUtil.isAgeAtLeast16(dob))
             return "You must be at least 16 years old to register.";
+        
+        try {
+        	Part image = req.getPart("profileImage"); // was "image"
+        	if (!ValidationUtil.isValidImageExtension(image))
+        	    return "Invalid image format. Only jpg, jpeg, png, and gif are allowed.";
+		} catch (IOException | ServletException e) {
+			return "Error handling image file. Please ensure the file is valid.";
+		}
+
 
         return null; // No validation errors
     }
@@ -149,12 +169,16 @@ public class RegisterController extends HttpServlet {
         String gender = req.getParameter("gender");
         String repass = req.getParameter("repass");
         Date dob = Date.valueOf(req.getParameter("dob"));
+        
 
         // Encrypt password before saving
         password = PasswordUtil.encrypt(username, password);
 
+        Part image = req.getPart("profileImage"); // 
+        String imageUrl = imageUtil.getImageNameFromPart(image);
+
         // Create and return the user object
-        return new UserModel(0, username, contact, address, email, password, age, gender, repass, dob);
+        return new UserModel(0, username, contact, address, email, password, age, gender, repass, dob,imageUrl);
     }
 
     /**
@@ -165,6 +189,29 @@ public class RegisterController extends HttpServlet {
         req.setAttribute("success", message);
         req.getRequestDispatcher(redirectPage).forward(req, resp);
     }
+
+    private boolean uploadImage(HttpServletRequest req) throws IOException, ServletException {
+        Part image = req.getPart("profileImage");
+
+        // Extract file name
+        String imageName = imageUtil.getImageNameFromPart(image);
+
+        // Resolve the absolute path to /images/user
+        String uploadPath = req.getServletContext().getRealPath("/images/user");
+
+        // Create the directory if it doesn't exist
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        // Save the file
+        String filePath = uploadPath + File.separator + imageName;
+        image.write(filePath);  // save file to disk
+
+        return true;
+    }
+
 
     /**
      * Handles errors by showing error message and preserving form input values.

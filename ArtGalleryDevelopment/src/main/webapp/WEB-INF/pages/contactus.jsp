@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Mandala Studios</title>
     <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/contact.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/contactus.css?v=1.0"/>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>

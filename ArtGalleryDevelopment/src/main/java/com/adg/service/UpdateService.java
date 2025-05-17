@@ -96,17 +96,18 @@ public class UpdateService {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return new UserModel(
-                    rs.getInt("user_id"),
-                    rs.getString("user_username"),
-                    rs.getString("user_contact"),
-                    rs.getString("user_address"),
-                    rs.getString("user_email"),
-                    rs.getString("user_password"),
-                    rs.getInt("user_age"),
-                    rs.getString("user_gender"),
-                    rs.getDate("user_dob")
-                );
+            	return new UserModel(
+            		    rs.getInt("user_id"),
+            		    rs.getString("user_username"),
+            		    rs.getString("user_contact"),
+            		    rs.getString("user_address"),
+            		    rs.getString("user_email"),
+            		    rs.getString("user_password"),
+            		    rs.getInt("user_age"),
+            		    rs.getString("user_gender"),
+            		    rs.getDate("user_dob"),
+            		    rs.getString("user_image")
+            		);
             }
         } catch (SQLException e) {
             e.printStackTrace();

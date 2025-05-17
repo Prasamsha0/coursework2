@@ -57,7 +57,7 @@ public class AuthenticationFilter implements Filter {
 
         // Restrict access to user-only pages
         if (path.contains("/home") || path.contains("/userUpdate")
-                || path.contains("/AboutController") || path.contains("/ContactController")) {
+                || path.contains("/AboutController") || path.contains("/ContactController")|| path.contains("/Event")) {
             if (!"user".equalsIgnoreCase(role)) {
                 // If not a user, forward to access-denied page
                 req.getRequestDispatcher("/WEB-INF/pages/access-denied.jsp").forward(req, resp);

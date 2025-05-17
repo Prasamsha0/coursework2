@@ -16,11 +16,20 @@
 <main class="main-container">
     <div class="profile-wrapper">
 
-        <!-- Profile Picture -->
-        <div class="profile-pic-section">
-            <img src="${contextPath}/images/default-profile.png" alt="Profile Picture" class="profile-pic"/>
-            <p class="change-photo">Change photo (coming soon)</p>
-        </div>
+       
+		<div class="profile-pic-section">
+		    <c:choose>
+		        <c:when test="${not empty user.image}">
+		            <img src="${pageContext.request.contextPath}/images/user/${user.image}" alt="Profile Picture" class="profile-pic"/>
+		        </c:when>
+		        <c:otherwise>
+		            <img src="${pageContext.request.contextPath}/images/user/default.png" alt="Default Profile Picture" class="profile-pic"/>
+		        </c:otherwise>
+		    </c:choose>
+		   
+		    
+		</div>
+
 
         <!-- Profile Form -->
         <div class="form-section">
@@ -33,7 +42,10 @@
    			<p class="error-message" style="color: red;">${errorMessage}</p>
 			</c:if>
             
+
             <form action="${contextPath}/userUpdate" method="post">
+            
+            
                 <div class="form-row">
                     <div class="form-group">
                         <label>Name</label>
@@ -70,12 +82,12 @@
     		<div class="form-group">
         		<label>New Password (optional)</label>
         		<input type="password" name="password" placeholder="Enter new password" />
-    </div>
-    <div class="form-group">
-        <label>Retype Password</label>
-        <input type="password" name="repass" placeholder="Retype new password" />
-    </div>
-</div>
+		    </div>
+		    <div class="form-group">
+		        <label>Retype Password</label>
+		        <input type="password" name="repass" placeholder="Retype new password" />
+		    </div>
+		</div>
 
                 <button type="submit">Save</button>
             </form>

@@ -6,14 +6,27 @@
     <meta charset="UTF-8">
     <title>About Us - Mandala Studios</title>
     <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-    <link rel="stylesheet" href="${contextPath}/css/about.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/aboutus.css?v=1.0"/>
 </head>
 <body>
 
 <jsp:include page="/WEB-INF/pages/header.jsp" />
 
 <main class="about-container">
+    <!-- Top Section -->
     <div class="about-top">
+        <img src="${contextPath}/images/img1.png" alt="Gallery Interior" class="art-image">
+        <div class="welcome-text">
+            <h2>Welcome to Mandala Art Point</h2>
+            <p>
+                This admin panel is designed to help manage artworks effectively and efficiently.
+                With functions like add, update, and delete, you can easily manage the paintings with ease.
+            </p>
+        </div>
+    </div>
+    
+    <!-- Bottom Section -->
+    <div class="about-bottom">
         <img src="${contextPath}/images/img2.png" alt="Art Piece" class="art-image">
         <div class="about-text">
             <h2>About Us</h2>
@@ -26,20 +39,10 @@
             </p>
         </div>
     </div>
-
-    <div class="about-bottom">
-        <img src="${contextPath}/images/img1.png" alt="Gallery Interior">
-        <div class="welcome-text">
-            <h2>Welcome to Mandala Art Point</h2>
-            <p>
-                This admin Panel is designed to help or manage the art works effectively and efficiently.
-                With functions like add, update and delete, you can easily manage the paintings with ease.
-            </p>
-        </div>
-    </div>
+    
 </main>
 
 <jsp:include page="/WEB-INF/pages/footer.jsp" />
+
 </body>
 </html>
-    

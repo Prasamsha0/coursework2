@@ -47,6 +47,7 @@ public class UpdateControllerr extends HttpServlet {
 
         req.setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/pages/update.jsp").forward(req, resp);
+        System.out.println("Image: " + user.getImage());
     }
 
     // Handles POST requests to update user data

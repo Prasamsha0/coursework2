@@ -1,12 +1,17 @@
 @charset "UTF-8";
+
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #fefefe;
+    background-color: #fdfdfd;
+    color: #333;
+    line-height: 1.6;
 }
 
 .about-container {
-    padding: 40px 5%;
+    padding: 60px 8%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .about-top, .about-bottom {
@@ -14,32 +19,40 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
+    gap: 40px;
 }
 
-.art-image, .about-bottom img {
-    width: 45%;
+.art-image {
+    width: 100%;
     max-width: 500px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    border: 1px solid #e1e1e1;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .about-text, .welcome-text {
-    width: 50%;
-    padding: 20px;
-    background-color: #111;
-    color: #fff;
+    flex: 1;
+    padding: 30px;
+    border-left: 5px solid #ffd369;
+    background-color: #fffef9;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.welcome-text {
-    background-color: #fdfdfd;
-    color: #222;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.05);
 }
 
 .about-text h2, .welcome-text h2 {
-    margin-top: 0;
-    font-size: 24px;
+    font-size: 26px;
     margin-bottom: 15px;
+    color: #111;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
 }
+
+.about-text p, .welcome-text p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #444;
+}
+
+

@@ -96,6 +96,6 @@ public class ImageUtil {
 	}
 	
 	public String getSavePath(String saveFolder) {
-		return "C:/Users/Prithivi/eclipse-workspace/islington-student/src/main/webapp/resources/images/"+saveFolder+"/";
+		return "C:\\Users\\Dell\\OneDrive\\Documents\\Course\\year 2\\DSA\\art\\coursework2\\ArtGalleryDevelopment\\src\\main\\webapp\\images" + File.separator + saveFolder + File.separator;
 	}
 }

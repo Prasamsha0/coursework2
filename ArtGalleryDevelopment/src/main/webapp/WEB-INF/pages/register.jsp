@@ -24,8 +24,8 @@
     <c:if test="${not empty success}">
       <p class="success-message">${success}</p>
     </c:if>
-
-    <form action="${contextPath}/register" method="post">
+    <form action="${contextPath}/register" method="post" enctype="multipart/form-data">
+    
       <div class="row">
         <input type="text" name="userName" placeholder="Full Name" value="${username}" required />
       </div>
@@ -58,6 +58,11 @@
           </label>
         </div>
       </div>
+    <div class="row">
+ 		 <label>Upload Profile Photo</label>
+  		<input type="file" name="profileImage" accept="image/*" required />
+	</div>
+      
 
       <button type="submit">Register</button>
     </form>

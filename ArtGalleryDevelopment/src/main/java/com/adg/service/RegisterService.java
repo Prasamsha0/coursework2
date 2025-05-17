@@ -18,8 +18,8 @@ public class RegisterService {
      * @throws Exception if a database connection or query error occurs.
      */
     public boolean insert(UserModel user) throws Exception {
-        String query = "INSERT INTO user (user_id, user_username, user_contact, user_address, user_email, user_password, user_age, user_gender, user_dob) " +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    	String query = "INSERT INTO user (user_id, user_username, user_contact, user_address, user_email, user_password, user_age, user_gender, user_dob, user_image) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = DbConfig.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -33,6 +33,8 @@ public class RegisterService {
             ps.setInt(7, user.getAge());
             ps.setString(8, user.getGender());
             ps.setDate(9, user.getDob());
+            ps.setString(10, user.getImage());
+
 
             return ps.executeUpdate() > 0;
 

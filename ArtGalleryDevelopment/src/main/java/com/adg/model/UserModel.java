@@ -17,6 +17,7 @@ public class UserModel {
     private String gender;
     private String repass; // used during registration to confirm password
     private Date dob;
+    private String image; 
 
     // ========================= Constructors =========================
 
@@ -24,7 +25,7 @@ public class UserModel {
      * Full constructor including all fields (used for complete user registration).
      */
     public UserModel(int userId, String userName, String contact, String address, String email,
-                     String password, int age, String gender, String repass, Date dob) {
+                     String password, int age, String gender, String repass, Date dob, String image) {
         this.userId = userId;
         this.userName = userName;
         this.contact = contact;
@@ -35,13 +36,14 @@ public class UserModel {
         this.gender = gender;
         this.repass = repass;
         this.dob = dob;
+        this.image = image;
     }
 
     /**
      * Constructor without repass (used for login or simplified views).
      */
     public UserModel(int userId, String userName, String contact, String address, String email,
-                     String password, int age, String gender, Date dob) {
+                     String password, int age, String gender, Date dob, String image) {
         this.userId = userId;
         this.userName = userName;
         this.contact = contact;
@@ -51,7 +53,10 @@ public class UserModel {
         this.age = age;
         this.gender = gender;
         this.dob = dob;
+        this.image = image;
     }
+    
+    
 
     /**
      * Constructor used for authentication (username and password only).
@@ -156,4 +161,14 @@ public class UserModel {
     public void setDob(Date dob) {
         this.dob = dob;
     }
+    
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 }

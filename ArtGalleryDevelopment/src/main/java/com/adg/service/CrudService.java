@@ -68,6 +68,31 @@ public class CrudService {
 
         return artworks;
     }
+    
+    public ArtworkModel getArtworkById(int id) throws Exception {
+        String query = "SELECT * FROM artwork WHERE artwork_id = ?";
+        try (Connection con = DbConfig.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                ArtworkModel artwork = new ArtworkModel();
+                artwork.setArtworkId(rs.getInt("artwork_id"));
+                artwork.setArtworkName(rs.getString("artwork_name"));
+                artwork.setArtistName(rs.getString("artist_name"));
+                artwork.setArtworkDate(rs.getDate("artwork_date"));
+                artwork.setArtworkMedium(rs.getString("artwork_medium"));
+                artwork.setArtworkPrice(rs.getDouble("artwork_price"));
+                artwork.setArtworkCategory(rs.getString("artwork_category"));
+                artwork.setArtworkFormat(rs.getString("artwork_format"));
+                return artwork;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Deletes an artwork by its ID.
@@ -89,6 +114,7 @@ public class CrudService {
             return false;
         }
     }
+    
 
     /**
      * Updates the details of an existing artwork.

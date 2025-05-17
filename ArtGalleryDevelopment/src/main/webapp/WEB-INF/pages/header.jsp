@@ -10,7 +10,7 @@
     <ul class="nav-links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/userUpdate">Manage Info</a></li>
-      <li><a href="#">Gallery</a></li>
+      <li><a href="${pageContext.request.contextPath}/ProductController">Gallery</a></li>
       <li><a href="${pageContext.request.contextPath}/Event">Events</a></li>
       <li><a href="${pageContext.request.contextPath}/AboutController">About Us</a></li>
       <li><a href="${pageContext.request.contextPath}/ContactController">Contact Us</a></li>

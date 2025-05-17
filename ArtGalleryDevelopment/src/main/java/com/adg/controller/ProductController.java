@@ -1,41 +1,51 @@
 package com.adg.controller;
 
+import com.adg.model.ArtworkModel;
+import com.adg.service.CrudService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
+
 import java.io.IOException;
+import java.util.List;
 
 /**
- * Servlet implementation class ProductController
+ * Servlet for handling listing, updating, and deleting artworks in the admin panel.
  */
-@WebServlet("/ProductController")
+@WebServlet(asyncSupported = true, urlPatterns = { "/ProductController" })
 public class ProductController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+    private static final long serialVersionUID = 1L;
+    private final CrudService crudService = new CrudService();
+
     /**
-     * @see HttpServlet#HttpServlet()
+     * Handles GET requests for:
+     * - Deleting artwork when action=delete is passed.
+     * - Displaying the artwork list.
      */
-    public ProductController() {
-        super();
-        // TODO Auto-generated constructor stub
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+        String artworkIdParam = request.getParameter("artworkId");
+
+
+        // Load and display all artworks
+        try {
+            List<ArtworkModel> artworks = crudService.getAllArtworks();
+            request.setAttribute("artworks", artworks);
+            request.getRequestDispatcher("/WEB-INF/pages/product.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(500, "Failed to load artworks.");
+        }
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
+    /**
+     * Handles POST requests for updating artwork details.
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    	doGet(request, response);
+    }
 }

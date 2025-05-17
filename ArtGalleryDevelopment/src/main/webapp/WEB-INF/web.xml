@@ -16,6 +16,8 @@
 	<welcome-file>update.jsp</welcome-file>
 	<welcome-file>artlist.jsp</welcome-file>
 	<welcome-file>event.jsp</welcome-file>
+	<welcome-file>product.jsp</welcome-file>
+	<welcome-file>artdetails.jsp</welcome-file>
     
     
   </welcome-file-list>

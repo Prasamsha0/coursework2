@@ -30,7 +30,7 @@
   <div class="featured-text">
     <h1>Explore Timeless Nepali Art</h1>
     <p>Discover cultural expressions through brush and pigment, captured by the finest Nepali artists.</p>
-    <button>Browse Gallery</button>
+    <a href="${pageContext.request.contextPath}/ProductController" class="logout-btn">>Browse Gallery</a>
   </div>
   <div class="featured-image">
     <img src="images/featured.png" alt="Featured Art">

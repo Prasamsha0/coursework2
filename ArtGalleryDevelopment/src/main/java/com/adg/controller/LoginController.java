@@ -74,10 +74,10 @@ public class LoginController extends HttpServlet {
 
                 // Set a role-based cookie and redirect the user to the appropriate dashboard or home page
                 if ("Admin".equalsIgnoreCase(username)) {
-                    CookieUtil.addCookie(resp, "role", "admin", 5 * 300);  // Set admin role cookie
+                	CookieUtil.addCookie(resp, "role", "admin", 86400);  // 1 day Set admin role cookie
                     resp.sendRedirect(req.getContextPath() + "/dashboard");  // Redirect to admin dashboard
                 } else {
-                    CookieUtil.addCookie(resp, "role", "user", 5 * 300);  // Set user role cookie
+                	CookieUtil.addCookie(resp, "role", "user", 86400);  // Set user role cookie
                     resp.sendRedirect(req.getContextPath() + "/home");  // Redirect to user home page
                 }
             } else {

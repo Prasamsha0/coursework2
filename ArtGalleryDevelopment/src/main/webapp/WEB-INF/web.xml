@@ -18,7 +18,8 @@
 	<welcome-file>event.jsp</welcome-file>
 	<welcome-file>product.jsp</welcome-file>
 	<welcome-file>artdetails.jsp</welcome-file>
-    
+	<welcome-file>feedback.jsp</welcome-file>
+    <welcome-file>report.jsp</welcome-file>
     
   </welcome-file-list>
     <!-- You can remove this if you don't need the CSS mapping -->

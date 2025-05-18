@@ -138,6 +138,10 @@ public class UpdateControllerr extends HttpServlet {
         if (!ValidationUtil.isNullOrEmpty(password)) {
             user.setPassword(password);
         }
+     // Fetch the existing user to preserve the image
+        UserModel existingUser = updateService.getUserByUsername(username);
+        user.setImage(existingUser.getImage()); // preserve the image
+
 
         // Perform update
         try {

@@ -47,7 +47,7 @@ public class AuthenticationFilter implements Filter {
         }
 
         // Restrict access to admin-only pages
-        if (path.contains("/dashboard") || path.contains("/ManageArtwork") || path.contains("/artlist")) {
+        if (path.contains("/dashboard") || path.contains("/ManageArtwork") || path.contains("/artlist") || path.contains("/feedback")|| path.contains("/report")) {
             if (!"admin".equalsIgnoreCase(role)) {
                 // If not an admin, forward to access-denied page
                 req.getRequestDispatcher("/WEB-INF/pages/access-denied.jsp").forward(req, resp);
@@ -57,7 +57,7 @@ public class AuthenticationFilter implements Filter {
 
         // Restrict access to user-only pages
         if (path.contains("/home") || path.contains("/userUpdate")
-                || path.contains("/AboutController") || path.contains("/ContactController")|| path.contains("/Event") || path.contains("/ProductController")|| path.contains("/ArtDetailsController")) {
+                || path.contains("/AboutController") || path.contains("/artist") || path.contains("/ContactController")|| path.contains("/Event") || path.contains("/ProductController")|| path.contains("/ArtDetailsController")) {
             if (!"user".equalsIgnoreCase(role)) {
                 // If not a user, forward to access-denied page
                 req.getRequestDispatcher("/WEB-INF/pages/access-denied.jsp").forward(req, resp);

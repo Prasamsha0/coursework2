@@ -6,43 +6,31 @@
 <head>
   <meta charset="UTF-8">
   <title>User List - Admin</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userlist.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userlist.css?v=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  
 </head>
 <body>
 
 <jsp:include page="/WEB-INF/pages/admin/header2.jsp" />
-
 <section class="dashboard-container">
   <h1>Registered Users</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>Contact</th>
-        <th>Address</th>
-        <th>Email</th>
-        <th>Age</th>
-        <th>Gender</th>
-        <th>Date of Birth</th>
-      </tr>
-    </thead>
-    <tbody>
-      <c:forEach var="user" items="${users}">
-        <tr>
-          <td>${user.userId}</td>
-          <td>${user.userName}</td>
-          <td>${user.contact}</td>
-          <td>${user.address}</td>
-          <td>${user.email}</td>
-          <td>${user.age}</td>
-          <td>${user.gender}</td>
-          <td>${user.dob}</td>
-        </tr>
-      </c:forEach>
-    </tbody>
-  </table>
+
+  <div class="user-card-grid">
+    <c:forEach var="user" items="${users}">
+      <div class="user-card">
+        <h2>${user.userName}</h2>
+        <p><strong>Contact:</strong> ${user.contact}</p>
+        <p><strong>Address:</strong> ${user.address}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <p><strong>Age:</strong> ${user.age}</p>
+        <p><strong>Gender:</strong> ${user.gender}</p>
+        <p><strong>Date of Birth:</strong> ${user.dob}</p>
+      </div>
+    </c:forEach>
+  </div>
 </section>
+
 
 <jsp:include page="/WEB-INF/pages/footer.jsp" />
 </body>

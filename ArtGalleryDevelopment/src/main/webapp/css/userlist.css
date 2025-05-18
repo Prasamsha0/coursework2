@@ -1,37 +1,53 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f7fa;
+}
 
 .dashboard-container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 60px auto;
-  padding: 20px;
-  font-family: 'Segoe UI', sans-serif;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .dashboard-container h1 {
   text-align: center;
-  margin-bottom: 30px;
-  color: #333;
+  color: #2d3436;
+  margin-bottom: 40px;
+  font-size: 32px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 15px;
+.user-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
 }
 
-th, td {
-  padding: 10px 14px;
-  text-align: center;
-  border: 1px solid #ddd;
+.user-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s;
 }
 
-th {
-  background-color: #f1f1f1;
-  font-weight: bold;
-  color: #333;
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
 }
 
-tr:nth-child(even) {
-  background-color: #f9f9f9;
+.user-card h2 {
+  margin-top: 0;
+  color: #3498db;
+}
+
+.user-card p {
+  margin: 6px 0;
+  color: #2f3542;
 }

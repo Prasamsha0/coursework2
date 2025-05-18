@@ -20,9 +20,6 @@
 	    <ul>
 	        <li><strong>Logged in as:</strong> ${currentUser}</li>
 	        <li><strong>Server Time:</strong> <span id="serverTime"></span></li>
-	        <li><strong>Session Started:</strong> <%= new java.text.SimpleDateFormat("hh:mm a").format(session.getCreationTime()) %></li>
-	        <li><strong>Session Duration:</strong> <span id="sessionDuration">Calculating...</span></li>
-	        <li><strong>Browser:</strong> <script>document.write(navigator.userAgent);</script></li>
 	    </ul>
 	</div>
 	  

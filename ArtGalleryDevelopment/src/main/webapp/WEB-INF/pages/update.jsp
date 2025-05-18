@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Edit Profile - Mandala Studios</title>
     <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-    <link rel="stylesheet" type="text/css" href="${contextPath}/css/update.css" />
+    <link rel="stylesheet" type="text/css" href="${contextPath}/css/update.css?v=1.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -14,38 +14,31 @@
 <jsp:include page="/WEB-INF/pages/header.jsp" />
 
 <main class="main-container">
-    <div class="profile-wrapper">
+    <div class="form-card">
 
-       
-		<div class="profile-pic-section">
-		    <c:choose>
-		        <c:when test="${not empty user.image}">
-		            <img src="${pageContext.request.contextPath}/images/user/${user.image}" alt="Profile Picture" class="profile-pic"/>
-		        </c:when>
-		        <c:otherwise>
-		            <img src="${pageContext.request.contextPath}/images/user/default.png" alt="Default Profile Picture" class="profile-pic"/>
-		        </c:otherwise>
-		    </c:choose>
-		   
-		    
-		</div>
+        <!-- Profile Picture at the Top -->
+        <div class="top-profile-pic">
+            <c:choose>
+                <c:when test="${not empty user.image}">
+                    <img src="${contextPath}/images/user/${user.image}" alt="Profile Picture" class="profile-pic"/>
+                </c:when>
+                <c:otherwise>
+                    <img src="${contextPath}/images/user/default.jpg" alt="Default Profile Picture" class="profile-pic"/>
+                </c:otherwise>
+            </c:choose>
+        </div>
 
+        <h2>Edit Your Profile</h2>
 
-        <!-- Profile Form -->
-        <div class="form-section">
-            <h2>Edit Your Profile</h2>
+        <div class="details-box">
             <c:if test="${not empty successMessage}">
-    		<p class="success-message" style="color: green;">${successMessage}</p>
-			</c:if>
-
-			<c:if test="${not empty errorMessage}">
-   			<p class="error-message" style="color: red;">${errorMessage}</p>
-			</c:if>
-            
+                <p class="success-message">${successMessage}</p>
+            </c:if>
+            <c:if test="${not empty errorMessage}">
+                <p class="error-message">${errorMessage}</p>
+            </c:if>
 
             <form action="${contextPath}/userUpdate" method="post">
-            
-            
                 <div class="form-row">
                     <div class="form-group">
                         <label>Name</label>
@@ -78,21 +71,21 @@
                         <input type="text" name="address" value="${user.address}" required />
                     </div>
                 </div>
+
                 <div class="form-row">
-    		<div class="form-group">
-        		<label>New Password (optional)</label>
-        		<input type="password" name="password" placeholder="Enter new password" />
-		    </div>
-		    <div class="form-group">
-		        <label>Retype Password</label>
-		        <input type="password" name="repass" placeholder="Retype new password" />
-		    </div>
-		</div>
+                    <div class="form-group">
+                        <label>New Password (optional)</label>
+                        <input type="password" name="password" placeholder="Enter new password" />
+                    </div>
+                    <div class="form-group">
+                        <label>Retype Password</label>
+                        <input type="password" name="repass" placeholder="Retype new password" />
+                    </div>
+                </div>
 
                 <button type="submit">Save</button>
             </form>
         </div>
-
     </div>
 </main>
 
